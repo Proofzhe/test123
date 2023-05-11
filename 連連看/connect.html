@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas示範 - 畫線</title>
+	<style>
+		canvas {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="800" height="800"></canvas>
+	<script>
+		// 取得 canvas 元素
+		var canvas = document.getElementById("myCanvas");
+
+		// 取得繪圖環境
+		var ctx = canvas.getContext("2d");
+
+		// 設定線條顏色和粗細
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 5;
+
+		// 設定起點
+		var isDrawing = false;
+		var lastX = 0;
+		var lastY = 0;
+
+        // 繪製紅色正方形
+		ctx.fillStyle = "red";
+		ctx.fillRect(50, 50, 100, 100);
+
+		// 繪製藍色圓形
+		ctx.fillStyle = "blue";
+		ctx.beginPath();
+		ctx.arc(600, 100, 50, 0, 2 * Math.PI);
+		ctx.fill();
+
+		// 監聽 canvas 元素的 click 事件
+		canvas.addEventListener("click", function(e) {
+			if (!isDrawing) {
+				// 設定起點
+				isDrawing = true;
+				lastX = e.offsetX;
+				lastY = e.offsetY;
+			} else {
+				// 終點
+				var currentX = e.offsetX;
+				var currentY = e.offsetY;
+
+				// 畫線
+				ctx.beginPath();
+				ctx.moveTo(lastX, lastY);
+				ctx.lineTo(currentX, currentY);
+				ctx.stroke();
+
+				// 更新起點
+				lastX = currentX;
+				lastY = currentY;
+
+				// 停止畫線
+				isDrawing = false;
+			}
+
+            
+		});
+	</script>
+</body>
+</html>
